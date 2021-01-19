@@ -9,10 +9,11 @@ client = Twitter::REST::Client.new do |config|
   config.access_token_secret = "rggSaGyuw6TOtfdg0tQsuXQAZdq6SIApeB5vs6Shv9wry"
 end
 
+#Mejorar este filtrado
 tweets = client.filter(country='Ecuador', 
                         count: 99999999999999,
                         start_date = '16/01/2021',
-                        end_date = '16/01/2021',
+                        end_date = '18/01/2021',
                         tweet_mode:'extended'
                       )
 results = []
