@@ -1,0 +1,5 @@
+fecha,texto,retweet_count,favorite_count,hashtags,mencions,name_place,full_name_place,country,username,followers,friends,create_count
+Sat Jan 23 05:19:03 +0000 2021,Testing API @gem @JosueDavalosC #learning #gemm,0,"[""learning"", ""gemm""]","[""gem"", ""JosueDavalosC""]",,,,JosueDavalosC,29,69,Wed Dec 22 23:03:57 +0000 2010
+Sat Jan 23 04:21:16 +0000 2021,Testing API @gem,0,[],"[""gem""]",,,,JosueDavalosC,29,69,Wed Dec 22 23:03:57 +0000 2010
+Sat Jan 23 04:19:48 +0000 2021,I'm tweeting with @gem!,0,[],"[""gem""]",,,,JosueDavalosC,29,69,Wed Dec 22 23:03:57 +0000 2010
+Sat May 16 05:14:19 +0000 2020,"RT @TawsEspol: ¡Gracias a todos los que participaron en la reunión de Taws hoy, especialmente al equipo @112_Eunice  @RobrtMoreno y @JosueD…",3,[],"[""TawsEspol"", ""112_Eunice"", ""RobrtMoreno""]",,,,JosueDavalosC,29,69,Wed Dec 22 23:03:57 +0000 2010
