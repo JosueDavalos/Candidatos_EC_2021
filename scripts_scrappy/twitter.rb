@@ -9,7 +9,7 @@ client = Twitter::REST::Client.new do |config|
   config.access_token_secret = "rggSaGyuw6TOtfdg0tQsuXQAZdq6SIApeB5vs6Shv9wry"
 end
 
-tweets = client.search("to:Ecuador",).take(3)
+tweets = client.search("to:Salud_Ec",).take(99)
 
 results = []
 tweets.each do |t|
@@ -54,8 +54,7 @@ tweets.each do |t|
     mentions << mention
   end
 
-  tweet = tweet.slice(0,3) + [hashtags] + [mentions] + info_place + info_user 
-  print tweet
+  tweet = tweet.slice(0,4) + [hashtags] + [mentions] + info_place + info_user 
   results << tweet
 end                 
 
