@@ -2,7 +2,8 @@ import pandas as pd
 from collections import Counter
 from textblob import TextBlob
 from ast import literal_eval
-
+from utils import bar_plot
+import matplotlib.pyplot as plt
 
 
 def get_top(data, top=10):
@@ -41,10 +42,7 @@ def get_amount_count_per_year(data):
     return d
 
 def get_sentiments(data):
-    d = {'Positivo':0, 'Negativo':0, 'Neutral':0}
-    temp = Counter(data['language'].to_list())
-    languege = list(dict(sorted(dict(temp).items(), key=lambda kv: kv[1], reverse=True)[:1]).keys())[0]
-    
+    d = {'Positivo':0, 'Negativo':0, 'Neutral':0}    
     data['sentimiento'] = data['texto'].apply(lambda x: TextBlob(x).sentiment[0])
     data['sentimiento'] = data['sentimiento'].apply(lambda x: 'Positivo' if x>=0.45 else 'Negativo' if x<=-0.45 else 'Neutral'  )
     d.update((100*data.groupby('sentimiento')['texto'].count()/len(data)).to_dict())
@@ -66,7 +64,6 @@ def get_analysis(df_tweet):
     return analysis
 
 df = pd.read_csv('data/tweets.csv')
-df = pd.read_csv('data/tweets.csv')
 
 df['fecha'] = pd.to_datetime(df['fecha'])
 df['create_count'] = pd.to_datetime(df['create_count'])
@@ -74,4 +71,12 @@ df['hashtags'] = df['hashtags'].apply(literal_eval)
 df['mencions'] = df['mencions'].apply(literal_eval)
 df.set_index('fecha', inplace=True)
 
-print(get_analysis(df))
+analysis = get_analysis(df)
+
+bar_plot(analysis['top_hashtag'], 'Top 10 de los Hashtag mas frecuentes', 'Frecuencia',20)
+bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes', 'Frecuencia',20)
+bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora', 'Frecuencia')
+bar_plot(analysis['mean_tweet_per_day'], 'Cantidad promedio de Tweets por Dia', 'Frecuencia')
+pd.Series(analysis['sentiments']).plot(kind='pie')
+plt.title('Sentiment analysis')
+plt.show()

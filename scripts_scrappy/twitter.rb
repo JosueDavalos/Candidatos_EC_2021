@@ -9,7 +9,8 @@ client = Twitter::REST::Client.new do |config|
   config.access_token_secret = "rggSaGyuw6TOtfdg0tQsuXQAZdq6SIApeB5vs6Shv9wry"
 end
 
-tweets = client.search("to:Salud_Ec",).take(99)
+#place: code_country 4e43cac8250a8b20
+tweets = client.search("place:ecuador since=2021-01-16",).take(99)
 
 results = []
 tweets.each do |t|
