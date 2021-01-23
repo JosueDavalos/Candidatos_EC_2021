@@ -9,19 +9,13 @@ client = Twitter::REST::Client.new do |config|
   config.access_token_secret = "rggSaGyuw6TOtfdg0tQsuXQAZdq6SIApeB5vs6Shv9wry"
 end
 
-
-tweets = client.user_timeline('JosueDavalosC', 
-                               count: 200,
-                               tweet_mode:'extended'
-                               )
+tweets = client.search("to:Ecuador",).take(3)
 
 results = []
 tweets.each do |t|
   long_tweet = client.status(t.id, tweet_mode: 'extended')
   fields = long_tweet.to_hash.slice(:created_at, 
                                     :full_text,
-                                    :retweet_count,
-                                    :favorite_count,
                                     :retweet_count,
                                     :favorite_count,
                                     :place,
@@ -37,8 +31,7 @@ tweets.each do |t|
                                     :country
                                     ).values
   end 
-  
-  print info_place
+
   info_user = tweet[-1].to_hash.slice(:screen_name,
                                     :followers_count,
                                     :friends_count,
@@ -61,14 +54,18 @@ tweets.each do |t|
     mentions << mention
   end
 
-  tweet.slice(0,5)
-
+  tweet = tweet.slice(0,3) + [hashtags] + [mentions] + info_place + info_user 
+  print tweet
   results << tweet
-  break
 end                 
 
 
-
+csv = CSV.open("../data/tweets2.csv", "w")
+header = ["fecha","texto",'retweet_count','favorite_count','hashtags','mencions','name_place','full_name_place','country','username','followers','friends','create_count']
+csv << header
+results.each do |r|
+  csv << r
+end
 
 
 
