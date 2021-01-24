@@ -10,11 +10,11 @@ driver.navigate.to 'https://www.facebook.com/?stype=lo&jlou=Afefo62Fe2jNt7zpIyqN
 sleep(3)
 user = driver.find_element(:xpath, '//*[@id="email"]')
 sleep(2)
-user.send_keys "nicole-agila@hotmail.com"
+user.send_keys ""
 sleep(3)
 password = driver.find_element(:xpath, '//*[@id="pass"]')
 sleep(2)
-password.send_keys "nagila0510"
+password.send_keys ""
 sleep(3)
 login = driver.find_element(:xpath, '//*[@id="u_0_b"]')
 sleep(2)
