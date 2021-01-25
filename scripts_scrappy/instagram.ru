@@ -22,8 +22,8 @@ login = driver.find_element(:xpath, '//*[@id="loginForm"]/div/div[3]/button')
 sleep(1)
 login.click
 sleep(15)
-driver.navigate.to links[1]
-puts "Scrapping %s" %[links[1]]
+driver.navigate.to links[0]
+puts "Scrapping %s" %[links[0]]
 sleep(2)
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
 sleep(5)
@@ -69,48 +69,54 @@ sleep(5)
 # DATE /html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/div/div/time
 
 countmatrix = 1
-# countrow=0
-# CSV.open('../data/instagramDestacados.csv', 'a') do |csv|
-#     csv <<["texto","url-post"]
-# end
-# for i in 1..3 do
-#     sleep(5)
-#     countrow=countrow+1
-#     xpath_postrow = '//*[@id="react-root"]/section/main/article/div[1]/div/div/div[%d]' %[countrow]
-#     countcol=0
-#     for j in 1..3 do 
-#         sleep(3)
-#         countcol=countcol+1
-#         xpath_postcolumn = '/div[%d]/a/div[1]/div[1]/img' %[countcol]
-#         begin
-#             post = driver.find_element(:xpath,xpath_postrow+xpath_postcolumn)
-#             CSV.open('../data/instagramDestacados.csv', 'a') do |csv|
-#                 csv <<[post.attribute("alt"),post.attribute("src")]
-#             end
-#         rescue
-#             puts "No encontro comentario"
-#         end
-#     end     
-#     puts "post %d" %[countrow]
-#     driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-#     sleep(5)
+countrow = 0
+CSV.open('../data/instagramDestacados3.csv', 'a') do |csv|
+    csv <<["texto","url-post"]
+end
+for i in 1..3 do
+    sleep(5)
+    countrow=countrow+1
+    xpath_postrow = '//*[@id="react-root"]/section/main/article/div[1]/div/div/div[%d]' %[countrow]
+    countcol=0
+    for j in 1..3 do 
+        sleep(3)
+        countcol=countcol+1
+        xpath_postcolumn = '/div[%d]/a/div[1]/div[1]/img' %[countcol]
+        begin
+            post = driver.find_element(:xpath,xpath_postrow+xpath_postcolumn)
+            CSV.open('../data/instagramDestacados3.csv', 'a') do |csv|
+                csv <<[post.attribute("alt"),post.attribute("src")]
+            end
+        rescue
+            puts "No encontro comentario"
+        end
+    end     
+    puts "post %d" %[countrow]
+    sleep(3)
     
-# end
+end
 
+driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
 
 countrow = 0
 
-CSV.open('../data/instagramRecientes.csv', 'a') do |csv|
+CSV.open('../data/instagramRecientes3.csv', 'a') do |csv|
     csv <<["texto","url-post"]
 end
+top = 14
 while countrow<=1000
     sleep(3)
-    if countmatrix==11
+
+    countrow=countrow+1
+    if countrow == top
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         sleep(5)
-        countmatrix=5
+        top = 1
+    end  
+
+    if top <= 4
+        top = top +1
     end
-    countrow=countrow+1
     xpath_postrow = '//*[@id="react-root"]/section/main/article/div[2]/div/div[%d]' %[countrow]
     
     countcol=0
@@ -120,7 +126,7 @@ while countrow<=1000
         xpath_postcolumn = '/div[%d]/a/div[1]/div[1]/img' %[countcol]
         begin
             post = driver.find_element(:xpath,xpath_postrow+xpath_postcolumn)
-            CSV.open('../data/instagramRecientes.csv', 'a') do |csv|
+            CSV.open('../data/instagramRecientes3.csv', 'a') do |csv|
                 csv <<[post.attribute("alt"),post.attribute("src")]
             end
         rescue
@@ -129,7 +135,14 @@ while countrow<=1000
         puts "post %d" %[countrow] 
     end
 
-    countmatrix = countmatrix+1
+    if top == 4
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+        sleep(5)
+        top = 1
+        controw = 14
+    end
+
+
 end
 
 driver.quit
