@@ -22,4 +22,8 @@ Instalar Selenium para Ruby
 gem install selenium-webdriver
 ```
 Instalar [Webdriver de Chrome xx.xx.xx](https://chromedriver.chromium.org/downloads)
-
+### Ingresar credenciales para login en facebook (/Candidatos_EC_2021/scripts_scrappy/facebook.rb)
+```
+user.send_keys "USUARIO"
+password.send_keys "CONTRASENA"
+```
