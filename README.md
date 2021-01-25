@@ -17,12 +17,12 @@ Instalar API de Twitter.
 gem install twitter
 ```
 ## Facebook
+Instalar [Webdriver de Chrome xx.xx.xx](https://chromedriver.chromium.org/downloads) <br/>
 Instalar Selenium para Ruby
 ```
 gem install selenium-webdriver
 ```
-Instalar [Webdriver de Chrome xx.xx.xx](https://chromedriver.chromium.org/downloads)
-#### Ingresar credenciales para login en facebook (/Candidatos_EC_2021/scripts_scrappy/facebook.rb)
+Ingresar credenciales para login en facebook en el [script](https://github.com/JosueDavalos/Candidatos_EC_2021/blob/main/scripts_scrappy/facebook.rb)
 ```
 user.send_keys "USUARIO"
 password.send_keys "CONTRASENA"
