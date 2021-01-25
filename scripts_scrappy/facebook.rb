@@ -7,19 +7,19 @@ links=['https://www.facebook.com/watch/live/?v=413121536672001&ref=watch_permali
 driver = Selenium::WebDriver.for :chrome
 
 driver.navigate.to 'https://www.facebook.com/?stype=lo&jlou=Afefo62Fe2jNt7zpIyqNvYVAuGiI42rSx8M4rASi0mdnEAFH-IP5yzZiyVegBlN1MtkaiQP9wiUnJr6RdbGaUE1Ld2RpsvC-CB9hfUtuGHsqTg&smuh=30675&lh=Ac_r7xLse5WG52XtObI'
-sleep(3)
+sleep(2)
 user = driver.find_element(:xpath, '//*[@id="email"]')
 sleep(2)
 user.send_keys ""
-sleep(3)
+sleep(2)
 password = driver.find_element(:xpath, '//*[@id="pass"]')
 sleep(2)
 password.send_keys ""
-sleep(3)
+sleep(2)
 login = driver.find_element(:xpath, '//*[@id="u_0_b"]')
 sleep(2)
 login.click
-sleep(15)
+sleep(10)
 driver.navigate.to links[2]
 puts "Scrapping %s" %[links[2]]
 sleep(10)
@@ -37,7 +37,7 @@ CSV.open('../data/comentarios-facebook.csv', 'a') do |csv|
     csv <<["nombre","minuto","comentario","url-perfil"]
 end
 for i in 1..2 do
-    sleep(5)
+    sleep(2)
     count=count+1
     xpath_hora = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/span/span[2]/div' %[count]
     xpath_comment='//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/div[2]/span/div/div' %[count]
@@ -69,7 +69,7 @@ while count<=11718
     end
 
     for i in 1..4 do
-        sleep(5)
+        sleep(2)
         count=count+1
         xpath_hora = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/span/span[2]/div' %[count]
         xpath_comment='//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/div[2]/span/div/div' %[count]
