@@ -16,3 +16,10 @@ Instalar API de Twitter.
 ```
 gem install twitter
 ```
+## Facebook
+Instalar Selenium para Ruby
+```
+gem install selenium-webdriver
+```
+Instalar [Webdriver de Chrome xx.xx.xx](https://chromedriver.chromium.org/downloads)
+
