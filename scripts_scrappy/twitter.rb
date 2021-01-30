@@ -10,7 +10,7 @@ client = Twitter::REST::Client.new do |config|
 end
 
 #place: code_country 4e43cac8250a8b20
-tweets = client.search("place:ecuador since=2021-01-16",).take(99)
+tweets = client.search("place:4e43cac8250a8b20",).take(9)
 
 results = []
 tweets.each do |t|
@@ -60,7 +60,7 @@ tweets.each do |t|
 end                 
 
 
-csv = CSV.open("../data/tweets2.csv", "w")
+csv = CSV.open("data/tweets3.csv", "wb")
 header = ["fecha","texto",'retweet_count','favorite_count','hashtags','mencions','name_place','full_name_place','country','username','followers','friends','create_count']
 csv << header
 results.each do |r|
