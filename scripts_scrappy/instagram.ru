@@ -5,7 +5,7 @@ Selenium::WebDriver::Chrome.driver_path = "c:/users/zebas/downloads/chromedriver
 
 links=['https://www.instagram.com/explore/tags/debatepresidencial/?hl=es-la','https://www.instagram.com/explore/tags/debatepresidencial2021/',
     'https://www.instagram.com/explore/tags/ecuadordebate2021/?hl=es-la',
-    'https://www.instagram.com/explore/tags/cne/?hl=es-la']
+    'https://www.instagram.com/explore/tags/cne/?hl=es-la',"https://www.instagram.com/explore/tags/elecciones2021ecuador/"]
 driver = Selenium::WebDriver.for :chrome
 
 driver.navigate.to 'https://www.instagram.com/'
@@ -14,6 +14,7 @@ user = driver.find_element(:xpath, '//*[@id="loginForm"]/div/div[1]/div/label/in
 sleep(1)
 user.send_keys "lpsebg"
 sleep(1)
+
 password = driver.find_element(:xpath, '//*[@id="loginForm"]/div/div[2]/div/label/input')
 sleep(1)
 password.send_keys "lp2021jsn"
@@ -22,8 +23,8 @@ login = driver.find_element(:xpath, '//*[@id="loginForm"]/div/div[3]/button')
 sleep(1)
 login.click
 sleep(15)
-driver.navigate.to links[1]
-puts "Scrapping %s" %[links[1]]
+driver.navigate.to links[4]
+puts "Scrapping %s" %[links[4]]
 sleep(2)
 
 # todos = driver.find_element(:xpath, '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[1]/div/div/span')
@@ -69,9 +70,9 @@ sleep(2)
 
 countmatrix = 1
 countrow = 0
-CSV.open('../data/instagramDestacados4.csv', 'a') do |csv|
-    csv <<["fecha","separador","user","separador","texto","separador","ubicacion"]
-end
+# CSV.open('../data/instagramDestacados4.csv', 'a') do |csv|
+#     csv <<["fecha","separador","user","separador","texto","separador","ubicacion"]
+# end
 for i in 1..3 do
     sleep(5)
     countrow=countrow+1
@@ -138,10 +139,10 @@ sleep(5)
 
 countrow = 0
 
-CSV.open('../data/instagramRecientes4.csv', 'a') do |csv|
-    csv <<["fecha","separador","user","separador","texto","separador","ubicacion"]
-end
-top = 16
+# CSV.open('../data/instagramRecientes4.csv', 'a') do |csv|
+#     csv <<["fecha","separador","user","separador","texto","separador","ubicacion"]
+# end
+top = 15
 while countrow<=1000
     sleep(3)
 
@@ -173,7 +174,7 @@ while countrow<=1000
                 puts "fecha no funciona"
             end
             begin
-                texto = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/span/text()")
+                texto = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/span")
             rescue
                 puts "texto no funciona"
             end
@@ -212,8 +213,8 @@ while countrow<=1000
         driver.execute_script("window.scroll(0, 10)")
         puts "post %d" %[countrow] 
     end
-
-
+    
+    
 end
 
 driver.quit
