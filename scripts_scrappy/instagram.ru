@@ -3,7 +3,7 @@ require 'csv'
 
 Selenium::WebDriver::Chrome.driver_path = "c:/users/zebas/downloads/chromedriver.exe"
 
-links=['https://www.instagram.com/explore/tags/debatepresidencial/?hl=es-la',
+links=['https://www.instagram.com/explore/tags/debatepresidencial/?hl=es-la','https://www.instagram.com/explore/tags/debatepresidencial2021/',
     'https://www.instagram.com/explore/tags/ecuadordebate2021/?hl=es-la',
     'https://www.instagram.com/explore/tags/cne/?hl=es-la']
 driver = Selenium::WebDriver.for :chrome
@@ -22,11 +22,10 @@ login = driver.find_element(:xpath, '//*[@id="loginForm"]/div/div[3]/button')
 sleep(1)
 login.click
 sleep(15)
-driver.navigate.to links[0]
-puts "Scrapping %s" %[links[0]]
+driver.navigate.to links[1]
+puts "Scrapping %s" %[links[1]]
 sleep(2)
-driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-sleep(5)
+
 # todos = driver.find_element(:xpath, '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[1]/div/div/span')
 # todos.click
 # sleep(5)
@@ -70,26 +69,64 @@ sleep(5)
 
 countmatrix = 1
 countrow = 0
-CSV.open('../data/instagramDestacados3.csv', 'a') do |csv|
-    csv <<["texto","url-post"]
+CSV.open('../data/instagramDestacados4.csv', 'a') do |csv|
+    csv <<["fecha","separador","user","separador","texto","separador","ubicacion"]
 end
 for i in 1..3 do
     sleep(5)
     countrow=countrow+1
+    
     xpath_postrow = '//*[@id="react-root"]/section/main/article/div[1]/div/div/div[%d]' %[countrow]
     countcol=0
     for j in 1..3 do 
         sleep(3)
         countcol=countcol+1
-        xpath_postcolumn = '/div[%d]/a/div[1]/div[1]/img' %[countcol]
+        xpath_postcolumn = '/div[%d]' %[countcol]
         begin
             post = driver.find_element(:xpath,xpath_postrow+xpath_postcolumn)
-            CSV.open('../data/instagramDestacados3.csv', 'a') do |csv|
-                csv <<[post.attribute("alt"),post.attribute("src")]
+            post.click
+            sleep(10)
+            begin
+                user = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/header/div[2]/div[1]/div[1]/span/a")
+                sleep(2)
+            rescue
+                puts "user no funciona"
             end
+            begin
+                fecha = driver.find_element(:xpath, "/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/div/div/time")
+            rescue
+                puts "fecha no funciona"
+            end
+            begin
+                texto = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/span")                
+            rescue
+                puts "texto no funciona"
+            end
+            begin
+                ubicacion = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/header/div[2]/div[2]/div[2]/a")
+                ubicacion = ubicacion.innerText
+            rescue
+                puts "ubicacion no funciona"
+                ubicacion = "No data"
+            end
+            
+            puts fecha.attribute("datetime")
+            puts user.text
+            puts texto.text
+            puts ubicacion
+
+            sleep(5)
+            CSV.open('../data/instagramDestacados4.csv', 'a') do |csv|
+                csv <<[fecha.attribute("datetime"),"|",user.text,"|",texto.text,"|",ubicacion]
+            end
+            sleep(5)
         rescue
             puts "No encontro comentario"
         end
+
+        salir = driver.find_element(:xpath,"/html/body/div[5]/div[3]/button")
+        salir.click
+        sleep(5)
     end     
     puts "post %d" %[countrow]
     sleep(3)
@@ -97,13 +134,14 @@ for i in 1..3 do
 end
 
 driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+sleep(5)
 
 countrow = 0
 
-CSV.open('../data/instagramRecientes3.csv', 'a') do |csv|
-    csv <<["texto","url-post"]
+CSV.open('../data/instagramRecientes4.csv', 'a') do |csv|
+    csv <<["fecha","separador","user","separador","texto","separador","ubicacion"]
 end
-top = 14
+top = 16
 while countrow<=1000
     sleep(3)
 
@@ -111,35 +149,68 @@ while countrow<=1000
     if countrow == top
         driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
         sleep(5)
-        top = 1
+        countrow = countrow-5
     end  
-
-    if top <= 4
-        top = top +1
-    end
-    xpath_postrow = '//*[@id="react-root"]/section/main/article/div[2]/div/div[%d]' %[countrow]
     
+    xpath_postrow = '//*[@id="react-root"]/section/main/article/div[2]/div/div[%d]' %[countrow]    
     countcol=0
     for i in 1..3 do
-        
         countcol=countcol+1        
-        xpath_postcolumn = '/div[%d]/a/div[1]/div[1]/img' %[countcol]
+        xpath_postcolumn = '/div[%d]' %[countcol]
         begin
             post = driver.find_element(:xpath,xpath_postrow+xpath_postcolumn)
-            CSV.open('../data/instagramRecientes3.csv', 'a') do |csv|
-                csv <<[post.attribute("alt"),post.attribute("src")]
+            post.click
+            sleep(10)
+            begin
+                user = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/h2/div/span/a")
+                sleep(2)
+            rescue
+                puts "user no funciona"
             end
+            begin
+                fecha = driver.find_element(:xpath, "/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/div/div/time")
+            rescue
+                puts "fecha no funciona"
+            end
+            begin
+                texto = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/div[3]/div[1]/ul/div/li/div/div/div[2]/span/text()")
+            rescue
+                puts "texto no funciona"
+            end
+            begin
+                ubicacion = driver.find_element(:xpath,"/html/body/div[5]/div[2]/div/article/header/div[2]/div[2]/div[2]/a")
+                ubicacion = ubicacion.innerText
+            rescue
+                puts "ubicacion no funciona"
+                ubicacion = "No data"
+            end
+            
+            puts fecha.attribute("datetime")
+            puts user.text
+            puts texto.text
+            puts ubicacion
+
+            sleep(5)
+            CSV.open('../data/instagramRecientes4.csv', 'a') do |csv|
+                csv <<[fecha.attribute("datetime"),"|",user.text,"|",texto.text,"|",ubicacion]
+            end
+            sleep(5)
         rescue
             puts "No encontro comentario"
+            
         end
-        puts "post %d" %[countrow] 
-    end
 
-    if top == 4
-        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
-        sleep(5)
-        top = 1
-        controw = 14
+        begin
+            salir = driver.find_element(:xpath,"/html/body/div[5]/div[3]/button")        
+            salir.click
+            sleep(5)
+        rescue
+            puts "no hay boton"
+            driver.navigate.to links[1]
+        end
+
+        driver.execute_script("window.scroll(0, 10)")
+        puts "post %d" %[countrow] 
     end
 
 
