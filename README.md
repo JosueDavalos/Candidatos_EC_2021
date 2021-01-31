@@ -21,6 +21,9 @@ Instalar [Webdriver de Chrome xx.xx.xx](https://chromedriver.chromium.org/downlo
 Instalar Selenium para Ruby
 ```
 gem install selenium-webdriver
+pip install deep-translator
+pip install googletrans
+googletrans==3.1.0a0
 ```
 Ingresar credenciales para login en facebook en el [script](https://github.com/JosueDavalos/Candidatos_EC_2021/blob/main/scripts_scrappy/facebook.rb)
 ```
