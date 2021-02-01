@@ -47,12 +47,11 @@ def get_sentiments(data, col_texto='texto'):
     d = {'Positivo':0, 'Negativo':0, 'Neutral':0}    
     sid = SentimentIntensityAnalyzer()
     data["sentimiento"] = data[col_texto].apply(lambda i: sid.polarity_scores(i)["compound"])
-    data['sentimiento'] = data['sentimiento'].apply(lambda x: 'Positivo' if x>=0.4 else 'Negativo' if x<=-0.4 else 'Neutral'  )
+    data['sentimiento'] = data['sentimiento'].apply(lambda x: 'Positivo' if x>=0.33 else 'Negativo' if x<=-0.33 else 'Neutral'  )
     d.update((100*data.groupby('sentimiento')[col_texto].count()/len(data)).to_dict())
     return d
 
 def get_analysis(df_tweet):
-
     analysis = {
         'amount_tweets': len(df_tweet),
         'top_hashtag': get_top(df_tweet['hashtags'].sum()),
@@ -60,14 +59,14 @@ def get_analysis(df_tweet):
         'mean_tweet_per_hour': get_mean_tweet_per_hour(df_tweet),
         'mean_tweet_per_day': get_mean_tweet_per_day(df_tweet),
         'amount_count_per_year': get_amount_count_per_year(df_tweet),
-        'sentiments': get_sentiments(df_tweet)
+        'sentiments': get_sentiments(df_tweet[df_tweet['en'].apply(lambda x: 'arauz' in x.lower())].copy(), 'en')
     }
 
     return analysis
 
 
 
-df = pd.read_csv('data/tweets_debate.csv')
+df = pd.read_csv('data/tweets_debate2.csv')
 
 df['fecha'] = pd.to_datetime(df['fecha'])
 df['create_count'] = pd.to_datetime(df['create_count'])
@@ -77,11 +76,9 @@ df.set_index('fecha', inplace=True)
 
 analysis = get_analysis(df)
 
-bar_plot(analysis['top_hashtag'], 'Top 10 de los Hashtag mas frecuentes - Twitter', 'Frecuencia',20)
-bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twitter', 'Frecuencia',20)
-bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
-bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
-pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets')
-get_wordcloud(df.texto, 'Twitter')´
-
-# https://towardsdatascience.com/translate-a-pandas-data-frame-using-googletrans-library-fb0aa7fca592
+# bar_plot(analysis['top_hashtag'], 'Top 10 de los Hashtag mas frecuentes - Twitter', 'Frecuencia',20)
+# bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twitter', 'Frecuencia',20)
+# bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
+# bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
+# pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets sobre Arauz')
+get_wordcloud([df.texto], 'Twitter 2')

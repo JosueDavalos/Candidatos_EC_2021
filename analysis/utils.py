@@ -32,7 +32,10 @@ def get_stopwords_spanish():
     return stopwords1
 
 
-def get_wordcloud(serie_texto, social_networkd_name):
+def get_wordcloud(list_serie_texto, social_networkd_name):
+    serie_texto = []
+    [serie_texto.extend(list(l_texto)) for l_texto in list_serie_texto]
+    serie_texto = pd.Series(serie_texto)
     mask = np.array(Image.open('analysis/ec.jpg'))
     plt.figure(figsize=(10, 14))
 
@@ -54,3 +57,15 @@ def get_wordcloud(serie_texto, social_networkd_name):
     plt.axis("off")
     plt.savefig('analysis/images/wordcloud_%s.png'%social_networkd_name,dpi=200,bbox_inches='tight')
     plt.show()
+
+
+from deep_translator import GoogleTranslator
+
+def tranlate_post_english(data, col_text, filename):
+    translator = GoogleTranslator(source='spanish', target='en')
+    data['en'] = data[col_text].apply(translator.translate)  
+    data['en'] = data['en'].apply(str)
+    data.to_csv('data/%s.csv'%filename, index=False)
+    return data
+   
+
