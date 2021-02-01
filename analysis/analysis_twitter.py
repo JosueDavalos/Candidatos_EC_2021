@@ -1,6 +1,5 @@
 import pandas as pd
 from collections import Counter
-from textblob import TextBlob
 from ast import literal_eval
 from utils import bar_plot, pie_sentiment_analysis, get_wordcloud
 import matplotlib.pyplot as plt
@@ -66,7 +65,7 @@ def get_analysis(df_tweet):
 
 
 
-df = pd.read_csv('data/tweets_debate2.csv')
+df = pd.read_csv('data/tweets_debate.csv')
 
 df['fecha'] = pd.to_datetime(df['fecha'])
 df['create_count'] = pd.to_datetime(df['create_count'])
@@ -76,9 +75,9 @@ df.set_index('fecha', inplace=True)
 
 analysis = get_analysis(df)
 
-# bar_plot(analysis['top_hashtag'], 'Top 10 de los Hashtag mas frecuentes - Twitter', 'Frecuencia',20)
-# bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twitter', 'Frecuencia',20)
-# bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
-# bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
-# pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets sobre Arauz')
+bar_plot(analysis['top_hashtag'], 'Top 10 de los Hashtag mas frecuentes - Twitter', 'Frecuencia',20)
+bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twitter', 'Frecuencia',20)
+bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
+bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
+pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets sobre Arauz')
 get_wordcloud([df.texto], 'Twitter 2')

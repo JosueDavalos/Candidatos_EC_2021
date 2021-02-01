@@ -12,18 +12,19 @@ Análisis de los candidatos presidenciales del Ecuador 2021 en los días del deb
 
 # Instalación de dependencias.
 ## Twitter
-Instalar API de Twitter.
+Instalar API de Twitter En Ruby.
 ```
 gem install twitter
+```
+Instalar dependencias para realizar el análisis de los tweets.
+```
+pip install -r requiments.txt
 ```
 ## Facebook
 Instalar [Webdriver de Chrome xx.xx.xx](https://chromedriver.chromium.org/downloads) <br/>
 Instalar Selenium para Ruby
 ```
 gem install selenium-webdriver
-pip install deep-translator
-pip install googletrans
-googletrans==3.1.0a0
 ```
 Ingresar credenciales para login en facebook en el [script](https://github.com/JosueDavalos/Candidatos_EC_2021/blob/main/scripts_scrappy/facebook.rb)
 ```
