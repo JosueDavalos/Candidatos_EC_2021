@@ -81,8 +81,4 @@ bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twit
 bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
 bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
 pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets sobre Arauz')
-<<<<<<< HEAD
 get_wordcloud([df.texto,df_fb.comentario], 'Twitter 2')
-=======
-get_wordcloud([df.texto], 'Twitter') #PONER AQUI LO DE FACE Y IG
->>>>>>> cc346a5f5c8add75b5e5399ca5269eaf2ca29ff9
