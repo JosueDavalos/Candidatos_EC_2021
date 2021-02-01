@@ -11,7 +11,6 @@ df_tweets = df_tweets.apply(lambda x : None if x["mencions"]=="[]" else x ,axis=
 df_tweets = df_tweets.dropna()
 # %%
 df_tweets["mencions"]=df_tweets["mencions"].apply(lambda x: x.replace("[","").replace("]","").replace("'","").split(",") )
-
 # %%
 '''raw_edges=open("../data/edges.csv","w")
 raw_edges.write("mencion,menciona_a\n")
