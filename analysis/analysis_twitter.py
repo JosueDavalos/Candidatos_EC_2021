@@ -73,6 +73,8 @@ df['create_count'] = pd.to_datetime(df['create_count'])
 df['hashtags'] = df['hashtags'].apply(literal_eval)
 df['mencions'] = df['mencions'].apply(literal_eval)
 df.set_index('fecha', inplace=True)
+ciudades = df.groupby('name_place')['num_hashtags'].count()
+dict_cities = ciudades.sort_values(ascending=False).head(10).to_dict()
 
 analysis = get_analysis(df)
 
@@ -80,5 +82,6 @@ bar_plot(analysis['top_hashtag'], 'Top 10 de los Hashtag mas frecuentes - Twitte
 bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twitter', 'Frecuencia',20)
 bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
 bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
+bar_plot(dict_cities, 'Top 10 de las cuidades con mayor tweets - Twitter', 'Frecuencia')
 pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets sobre Arauz')
-get_wordcloud([df.texto,df_fb.comentario], 'Twitter 2')
+get_wordcloud([df.texto,df_fb.comentario], 'Todas las Redes Sociales')
