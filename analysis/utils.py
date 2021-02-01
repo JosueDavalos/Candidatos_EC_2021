@@ -48,7 +48,7 @@ def get_wordcloud(list_serie_texto, social_networkd_name):
     raw_string = quitar_tildes(raw_string)
     no_links = re.sub(r'http\S+', '', raw_string)
     no_unicode = re.sub(r"\\[a-z][a-z]?[0-9]+", '', no_links)
-    no_special_characters = re.sub('[^A-Za-z ]+', '', no_unicode)
+    no_special_characters = re.sub('[^A-Za-z0-9 ]+', '', no_unicode)
     words = no_special_characters.lower().split(' ')
 
     # Create stopword list:
