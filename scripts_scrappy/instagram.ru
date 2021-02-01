@@ -117,8 +117,8 @@ for i in 1..3 do
             puts ubicacion
 
             sleep(5)
-            CSV.open('../data/instagramDestacados4.csv', 'a') do |csv|
-                csv <<[fecha.attribute("datetime"),"|",user.text,"|",texto.text,"|",ubicacion]
+            CSV.open('../data/instagramDestacados.csv', 'a') do |csv|
+                csv <<[fecha.attribute("datetime"),user.text,texto.text,ubicacion]
             end
             sleep(5)
         rescue
@@ -139,9 +139,9 @@ sleep(5)
 
 countrow = 0
 
-# CSV.open('../data/instagramRecientes4.csv', 'a') do |csv|
-#     csv <<["fecha","separador","user","separador","texto","separador","ubicacion"]
-# end
+CSV.open('../data/instagramRecientes.csv', 'a') do |csv|
+    csv <<["fecha","user","texto","ubicacion"]
+end
 top = 15
 while countrow<=1000
     sleep(3)
@@ -192,8 +192,8 @@ while countrow<=1000
             puts ubicacion
 
             sleep(5)
-            CSV.open('../data/instagramRecientes4.csv', 'a') do |csv|
-                csv <<[fecha.attribute("datetime"),"|",user.text,"|",texto.text,"|",ubicacion]
+            CSV.open('../data/instagramRecientes.csv', 'a') do |csv|
+                csv <<[fecha.attribute("datetime"),user.text,texto.text,ubicacion]
             end
             sleep(5)
         rescue
