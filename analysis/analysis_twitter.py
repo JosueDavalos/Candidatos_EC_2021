@@ -82,4 +82,4 @@ bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twit
 bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
 bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
 pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets sobre Arauz')
-get_wordcloud([df.texto,df_fb.comentario,df_ig.texto], 'Twitter 2')
+get_wordcloud([df.texto,df_fb.comentario,df_ig.texto], 'Todas las Redes Sociales')
