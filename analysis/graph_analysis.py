@@ -31,8 +31,8 @@ def edges_file():
     print("Fin de archivo")
 
 def nodes_edges():
-  edges=pd.read_csv("../data/graph.csv")
-  nodes = pd.read_csv("../data/nodes.csv")
+  edges=pd.read_csv("data/graph.csv")
+  nodes = pd.read_csv("data/nodes.csv")
   return edges,nodes
 
 def create_graph():
@@ -43,7 +43,7 @@ def create_graph():
   plt.show()
 
 
-df_tweets = pd.read_csv("../data/tweets_debate.csv")
+df_tweets = pd.read_csv("data/tweets_debate.csv")
 #clean_tweets_mentions()
 #edges_file()
 edges,nodes=nodes_edges()
@@ -62,8 +62,8 @@ plt.ylabel("betweenesscentrality")
 plt.show()
 
 nodes['freq_class']=nodes.groupby("modularity_class")["modularity_class"].transform("count")
-nodes=nodes.drop_duplicates(subset=["modularity_class"])
-nodes = nodes.sort_values('freq_class',ascending=False)
-top_class = nodes.head()["freq_class"].values
+nodes_unique=nodes.drop_duplicates(subset=["modularity_class"])
+nodes_unique = nodes_unique.sort_values('freq_class',ascending=False)
+top_class = nodes_unique.head()["modularity_class"].values
 for c in top_class:
     get_wordcloud([nodes[nodes["modularity_class"]==c].Id], 'class_{}'.format(c))
