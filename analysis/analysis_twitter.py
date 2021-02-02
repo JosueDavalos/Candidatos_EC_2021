@@ -1,9 +1,8 @@
 import pandas as pd
 from collections import Counter
 from ast import literal_eval
-from utils import bar_plot, pie_sentiment_analysis, get_wordcloud
+from utils import bar_plot, pie_sentiment_analysis, get_wordcloud, get_sentiments
 import matplotlib.pyplot as plt
-from nltk.sentiment.vader import SentimentIntensityAnalyzer
 
 
 
@@ -40,14 +39,6 @@ def get_amount_count_per_year(data):
         d[i]=0
     data['create_count_year']= data['create_count'].dt.year
     d.update(data.groupby('create_count_year')['texto'].count().to_dict())
-    return d
-
-def get_sentiments(data, col_texto='texto'):
-    d = {'Positivo':0, 'Negativo':0, 'Neutral':0}    
-    sid = SentimentIntensityAnalyzer()
-    data["sentimiento"] = data[col_texto].apply(lambda i: sid.polarity_scores(i)["compound"])
-    data['sentimiento'] = data['sentimiento'].apply(lambda x: 'Positivo' if x>=0.33 else 'Negativo' if x<=-0.33 else 'Neutral'  )
-    d.update((100*data.groupby('sentimiento')[col_texto].count()/len(data)).to_dict())
     return d
 
 def get_analysis(df_tweet):

@@ -6,6 +6,8 @@ import numpy as np
 import re
 from unicodedata import normalize
 from nltk.corpus import stopwords
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+
 
 def bar_plot(dict_values, title, ylabel, rotation=0):
     pd.Series(dict_values).plot(kind='bar', figsize=(16,5))
@@ -13,7 +15,7 @@ def bar_plot(dict_values, title, ylabel, rotation=0):
     plt.ylabel(ylabel, size=14)
     plt.title(title, size=16)
     plt.grid(axis='y', alpha=.2)
-    plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
+    # plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
     plt.show()
 
 def pie_sentiment_analysis(dict_sentiment_analysis, title):
@@ -24,7 +26,7 @@ def pie_sentiment_analysis(dict_sentiment_analysis, title):
             colors=['#2bdb25','#ff795c','#f5bf42'])
     
     plt.title(title)
-    plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
+    # plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
     plt.show()
 
 
@@ -69,7 +71,7 @@ def get_wordcloud(list_serie_texto, social_networkd_name):
     plt.axis("off")
     #plt.title('WordCloud con todos los post de las redes sociales', size=15)
     plt.title("Clasficacion {} del grafo.".format(social_networkd_name), size=15)
-    plt.savefig('analysis/images/wordcloud_%s.png'%social_networkd_name,dpi=200,bbox_inches='tight')
+    # plt.savefig('analysis/images/wordcloud_%s.png'%social_networkd_name,dpi=200,bbox_inches='tight')
     plt.show()
 
 
@@ -77,9 +79,16 @@ from deep_translator import GoogleTranslator
 
 def tranlate_post_english(data, col_text, filename):
     translator = GoogleTranslator(source='spanish', target='en')
-    data['en'] = data[col_text].apply(translator.translate)  
-    data['en'] = data['en'].apply(str)
+    data['en'] = data[col_text].astype(str).apply(translator.translate)  
+    data['en'] = data['en'].astype(str)
     data.to_csv('data/%s.csv'%filename, index=False)
     return data
    
 
+def get_sentiments(data, col_texto='texto'):
+    d = {'Positivo':0, 'Negativo':0, 'Neutral':0}    
+    sid = SentimentIntensityAnalyzer()
+    data["sentimiento"] = data[col_texto].apply(lambda i: sid.polarity_scores(i)["compound"])
+    data['sentimiento'] = data['sentimiento'].apply(lambda x: 'Positivo' if x>=0.33 else 'Negativo' if x<=-0.33 else 'Neutral'  )
+    d.update((100*data.groupby('sentimiento')[col_texto].count()/len(data)).to_dict())
+    return d
