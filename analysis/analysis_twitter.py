@@ -67,6 +67,7 @@ def get_analysis(df_tweet):
 
 df = pd.read_csv('data/tweets_debate.csv')
 df_fb = pd.read_csv("data/comentarios_unicos.csv")
+df_ig = pd.read_csv("data/InstagramRecientesUnicos.csv")
 
 df['fecha'] = pd.to_datetime(df['fecha'])
 df['create_count'] = pd.to_datetime(df['create_count'])
@@ -81,4 +82,4 @@ bar_plot(analysis['top_mencions'], 'Top 10 de los Mentions mas frecuentes - Twit
 bar_plot(analysis['mean_tweet_per_hour'], 'Cantidad promedio de Tweets por hora - Twitter', 'Frecuencia')
 bar_plot(analysis['mean_tweet_per_day'], 'Cantidad de Tweets por Dia - Twitter', 'Frecuencia')
 pie_sentiment_analysis(analysis['sentiments'],'Análisis de Sentimientos de Tweets sobre Arauz')
-get_wordcloud([df.texto,df_fb.comentario], 'Twitter 2')
+get_wordcloud([df.texto,df_fb.comentario,df_ig.texto], 'Twitter 2')
