@@ -13,7 +13,7 @@ def bar_plot(dict_values, title, ylabel, rotation=0):
     plt.ylabel(ylabel, size=14)
     plt.title(title, size=16)
     plt.grid(axis='y', alpha=.2)
-    # plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
+    plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
     plt.show()
 
 def pie_sentiment_analysis(dict_sentiment_analysis, title):
@@ -24,7 +24,7 @@ def pie_sentiment_analysis(dict_sentiment_analysis, title):
             colors=['#2bdb25','#ff795c','#f5bf42'])
     
     plt.title(title)
-    # plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
+    plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
     plt.show()
 
 
@@ -42,7 +42,7 @@ def get_stopwords_spanish():
 
 def get_wordcloud(list_serie_texto, social_networkd_name):
     serie_texto = []
-    [serie_texto.extend(list(l_texto)) for l_texto in list_serie_texto]
+    [serie_texto.extend(list(l_texto.apply(str))) for l_texto in list_serie_texto]
 
     #Limpiar Datasets
     raw_string = ' '.join(serie_texto)
@@ -59,8 +59,6 @@ def get_wordcloud(list_serie_texto, social_networkd_name):
     
     mask = np.array(Image.open('analysis/ec.jpg'))
     plt.figure(figsize=(10, 14))
-
-
     wordcloud = WordCloud(stopwords = stopwords_spanish,
                         mask=mask, background_color="white",
                         max_words=700, max_font_size=256,
@@ -69,6 +67,7 @@ def get_wordcloud(list_serie_texto, social_networkd_name):
 
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
+    plt.title('WordCloud con todos los post de las redes sociales', size=15)
     plt.savefig('analysis/images/wordcloud_%s.png'%social_networkd_name,dpi=200,bbox_inches='tight')
     plt.show()
 
