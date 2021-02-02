@@ -102,4 +102,3 @@ plt.savefig('HeatMapPostRecientesPorDia.png')
 
 
 
-
