@@ -79,24 +79,33 @@ df_insta_Recientes = df_insta_Recientes[(df_insta_Recientes['mes'] == 1)]
 
 
 
-instaDestacados = df_insta_Destacados.pivot(index='fecha', columns='dia', values='sentimiento')
-instd = sns.heatmap(instaDestacados, vmin=-1, vmax=1)
-# instd.figure.savefig("HeatMapPostDestacadosPorDia.png")
+# instaDestacados = df_insta_Destacados.pivot(index='fecha', columns='dia', values='sentimiento')
+# instd = sns.heatmap(instaDestacados, vmin=-1, vmax=1)
+# # instd.figure.savefig("HeatMapPostDestacadosPorDia.png")
 
-plt.title('Mapa de Calor Post por fecha según grado de aceptación')
+# plt.title('Mapa de Calor Post por fecha según grado de aceptación')
 
-plt.savefig('HeatMapPostDestacadosPorDia.png')   
+# plt.savefig('HeatMapPostDestacadosPorDia.png')   
 
 
 
-instaRecientes = df_insta_Recientes.pivot(index='fecha', columns='dia', values='sentimiento')
-instr = sns.heatmap(instaRecientes, vmin=-1, vmax=1)
-# instr.figure.savefig("HeatMapPostRecientesPorDia.png")
+# instaRecientes = df_insta_Recientes.pivot(index='fecha', columns='dia', values='sentimiento')
+# instr = sns.heatmap(instaRecientes, vmin=-1, vmax=1)
+# # instr.figure.savefig("HeatMapPostRecientesPorDia.png")
 
-plt.title('Mapa de Calor Post por fecha según grado de aceptación')
+# plt.title('Mapa de Calor Post por fecha según grado de aceptación')
 
-plt.savefig('HeatMapPostRecientesPorDia.png')   
+# plt.savefig('HeatMapPostRecientesPorDia.png')   
 
+df_ig = pd.read_csv("data/InstagramRecientesUnicos.csv")
+df_ig['fecha'] = pd.to_datetime(df_ig['fecha'])
+df_ig['hora'] = df_ig['fecha'].dt.hour
+
+temp = df_ig.groupby(['dia','hora'], as_index=False)['sentimiento'].mean()
+sns.heatmap(temp.pivot('dia','hora','sentimiento'), vmin=-1, vmax=1)
+plt.title('Analisis de sentimientos por dia y hora')
+plt.savefig('AnalisisSentimientosPostPorDiaYHora.png')  
+plt.show()
 
 
 
