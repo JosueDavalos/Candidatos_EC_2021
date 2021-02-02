@@ -73,16 +73,29 @@ df_insta_Destacados.fecha=df_insta_Destacados.fecha.str[7:19]
 
 df_insta_Recientes.fecha=df_insta_Recientes.fecha.str[7:19]
 
+df_insta_Recientes.mes= df_insta_Recientes.mes.astype(int)
 
-instaDestacados = df_insta_Destacados.pivot(index='fecha', columns='mes', values='sentimiento')
+df_insta_Recientes = df_insta_Recientes[(df_insta_Recientes['mes'] == 1)]
+
+
+
+instaDestacados = df_insta_Destacados.pivot(index='fecha', columns='dia', values='sentimiento')
 instd = sns.heatmap(instaDestacados, vmin=-1, vmax=1)
-instd.figure.savefig("HeatMapPostDestacadosPorDia.png")
+# instd.figure.savefig("HeatMapPostDestacadosPorDia.png")
+
+plt.title('Mapa de Calor Post por fecha según grado de aceptación')
+
+plt.savefig('HeatMapPostDestacadosPorDia.png')   
 
 
 
 instaRecientes = df_insta_Recientes.pivot(index='fecha', columns='dia', values='sentimiento')
 instr = sns.heatmap(instaRecientes, vmin=-1, vmax=1)
-instr.figure.savefig("HeatMapPostRecientesPorDia.png")
+# instr.figure.savefig("HeatMapPostRecientesPorDia.png")
+
+plt.title('Mapa de Calor Post por fecha según grado de aceptación')
+
+plt.savefig('HeatMapPostRecientesPorDia.png')   
 
 
 
