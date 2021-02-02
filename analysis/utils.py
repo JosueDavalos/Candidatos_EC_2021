@@ -13,7 +13,7 @@ def bar_plot(dict_values, title, ylabel, rotation=0):
     pd.Series(dict_values).plot(kind='bar', figsize=(16,5))
     plt.xticks(rotation=rotation)
     plt.ylabel(ylabel, size=14)
-    plt.title(title, size=16)
+    plt.title(title + ' (16 y 17 enero, 2021)', size=16)
     plt.grid(axis='y', alpha=.2)
     plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
     plt.show()
@@ -25,7 +25,7 @@ def pie_sentiment_analysis(dict_sentiment_analysis, title):
             autopct= lambda n: str(round((n/100.0)*100,1))+"%", startangle=45,labels=df.type, 
             colors=['#2bdb25','#ff795c','#f5bf42'])
     
-    plt.title(title)
+    plt.title(title + ' (16 y 17 enero, 2021)')
     plt.savefig("analysis/images/"+title+".png",dpi=200,bbox_inches='tight')
     plt.show()
 
@@ -69,7 +69,7 @@ def get_wordcloud(list_serie_texto, social_networkd_name):
 
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
-    plt.title('WordCloud con todos los post de las Redes Sociales', size=15)
+    plt.title('WordCloud con todos los post de las Redes Sociales' + ' (16 y 17 enero, 2021)', size=15)
     # plt.title("Clasficacion {} del grafo.".format(social_networkd_name), size=15)
     plt.savefig('analysis/images/wordcloud_%s.png'%social_networkd_name,dpi=200,bbox_inches='tight')
     plt.show()
