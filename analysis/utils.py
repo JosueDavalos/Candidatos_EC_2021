@@ -34,6 +34,7 @@ def quitar_tildes(s):
     return normalize( 'NFC', s)
 
 def get_stopwords_spanish():
+    
     stopwords1 = set(pd.read_csv('analysis/stop_words_spanish.txt').iloc[:,0].to_list())
     stopwords1 =  stopwords1 | set(stopwords.words('spanish'))
     return {quitar_tildes (sw) for sw in stopwords1}
@@ -55,6 +56,7 @@ def get_wordcloud(list_serie_texto, social_networkd_name):
     stopwords_spanish = get_stopwords_spanish()
     words = [w for w in words if w not in stopwords_spanish]
 
+    
     mask = np.array(Image.open('analysis/ec.jpg'))
     plt.figure(figsize=(10, 14))
     wordcloud = WordCloud(stopwords = stopwords_spanish,
