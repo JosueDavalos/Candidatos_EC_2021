@@ -1,6 +1,27 @@
 require "selenium-webdriver"
 require 'csv'
 
+def extract_comment()
+    count=count+1
+    xpath_hora = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/span/span[2]/div' %[count]
+    xpath_comment='//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/div[2]/span/div/div' %[count]
+    xpath_nombre = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div/div/div/div[1]/a/span/span' %[count]
+    xpath_perfil = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div/div/div/div[1]/a' %[count]
+    puts "Comentario %d" %[count]
+    begin
+        comment = driver.find_element(:xpath,xpath_comment)
+        hora = driver.find_element(:xpath, xpath_hora)
+        nombre = driver.find_element(:xpath,xpath_nombre)
+        perfil = driver.find_element(:xpath,xpath_perfil)
+        CSV.open('../data/comentarios-facebook.csv', 'a') do |csv|
+            csv <<[nombre.text,hora.text,comment.text,perfil.attribute("href")]
+        end
+    rescue
+        puts "No encontro comentario"
+    end
+end
+
+
 Selenium::WebDriver::Chrome.driver_path = "/home/nagila/Downloads/Instaladores/chromedriver_linux64/chromedriver"
 
 links=['https://www.facebook.com/watch/live/?v=413121536672001&ref=watch_permalink','https://www.facebook.com/watch/live/?v=198091908699961&ref=search','https://www.facebook.com/watch/live/?v=327639468467607&ref=search','https://www.facebook.com/watch/live/?v=337713537604525&ref=watch_permalink']
@@ -39,23 +60,7 @@ end
 
 for i in 1..2 do
     sleep(2)
-    count=count+1
-    xpath_hora = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/span/span[2]/div' %[count]
-    xpath_comment='//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/div[2]/span/div/div' %[count]
-    xpath_nombre = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div/div/div/div[1]/a/span/span' %[count]
-    xpath_perfil = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div/div/div/div[1]/a' %[count]
-    puts "Comentario %d" %[count]
-    begin
-        comment = driver.find_element(:xpath,xpath_comment)
-        hora = driver.find_element(:xpath, xpath_hora)
-        nombre = driver.find_element(:xpath,xpath_nombre)
-        perfil = driver.find_element(:xpath,xpath_perfil)
-        CSV.open('../data/comentarios-facebook.csv', 'a') do |csv|
-            csv <<[nombre.text,hora.text,comment.text,perfil.attribute("href")]
-        end
-    rescue
-        puts "No encontro comentario"
-    end
+    extract_comment()
 end
 
 while count<=8618
@@ -68,23 +73,7 @@ while count<=8618
     end
     for i in 1..4 do
         sleep(2)
-        count=count+1
-        puts "Comentario %d" %[count]
-        xpath_hora = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/span/span[2]/div' %[count]
-        xpath_comment='//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div[1]/div/div/div[2]/span/div/div' %[count]
-        xpath_nombre = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div/div/div/div[1]/a/span/span' %[count]
-        xpath_perfil = '//*[@id="mount_0_0"]/div/div[1]/div[1]/div[3]/div/div/div[1]/div[1]/div[2]/div/div[2]/div[1]/div[3]/div/div[2]/div[2]/ul/li[%d]/div[1]/div/div[2]/div/div[1]/div/div/div/div/div[1]/a' %[count]
-        begin
-            comment = driver.find_element(:xpath,xpath_comment)
-            hora = driver.find_element(:xpath, xpath_hora)
-            nombre = driver.find_element(:xpath,xpath_nombre)
-            perfil = driver.find_element(:xpath,xpath_perfil)
-            CSV.open('../data/comentarios-facebook.csv', 'a') do |csv|
-                csv <<[nombre.text,hora.text,comment.text,perfil.attribute("href")]
-            end
-        rescue
-            puts "No encontro comentario"
-        end
+        extract_comment()
     end 
 end
 
