@@ -50,23 +50,26 @@ df_tweets = pd.read_csv("data/tweets_debate.csv")
 edges,nodes=nodes_edges()
 create_graph()
 
-nodes = nodes.sort_values('indegree',ascending=False)
-plt.bar(nodes["Id"].head(),nodes["indegree"].head(), color="lightcoral")
-plt.ylabel("indegree")
-plt.title("Top 5 de usuarios con el mayor indegree")
-#plt.savefig('analysis/images/indegree.png')
-plt.show()
+def indegree():
+    nodes = nodes.sort_values('indegree',ascending=False)
+    plt.bar(nodes["Id"].head(),nodes["indegree"].head(), color="lightcoral")
+    plt.ylabel("indegree")
+    plt.title("Top 5 de usuarios con el mayor indegree")
+    #plt.savefig('analysis/images/indegree.png')
+    plt.show()
 
-nodes = nodes.sort_values('betweenesscentrality',ascending=False)
-plt.bar(nodes["Id"].head(),nodes["betweenesscentrality"].head(), color="moccasin")
-plt.ylabel("betweenesscentrality")
-plt.title("Top 5 de usuarios con el mayor betweeness centrality")
-#plt.savefig('analysis/images/betweenesscentrality.png')
-plt.show()
+def betweenesscentrality():
+    nodes = nodes.sort_values('betweenesscentrality',ascending=False)
+    plt.bar(nodes["Id"].head(),nodes["betweenesscentrality"].head(), color="moccasin")
+    plt.ylabel("betweenesscentrality")
+    plt.title("Top 5 de usuarios con el mayor betweeness centrality")
+    #plt.savefig('analysis/images/betweenesscentrality.png')
+    plt.show()
 
-nodes['freq_class']=nodes.groupby("modularity_class")["modularity_class"].transform("count")
-nodes_unique=nodes.drop_duplicates(subset=["modularity_class"])
-nodes_unique = nodes_unique.sort_values('freq_class',ascending=False)
-top_class = nodes_unique.head()["modularity_class"].values
-for c in top_class:
-    get_wordcloud([nodes[nodes["modularity_class"]==c].Id], '{}'.format(c))
+def worldcloud_classes():
+    nodes['freq_class']=nodes.groupby("modularity_class")["modularity_class"].transform("count")
+    nodes_unique=nodes.drop_duplicates(subset=["modularity_class"])
+    nodes_unique = nodes_unique.sort_values('freq_class',ascending=False)
+    top_class = nodes_unique.head()["modularity_class"].values
+    for c in top_class:
+        get_wordcloud([nodes[nodes["modularity_class"]==c].Id], '{}'.format(c))

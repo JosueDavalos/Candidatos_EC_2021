@@ -103,7 +103,7 @@ df_ig['hora'] = df_ig['fecha'].dt.hour
 
 temp = df_ig.groupby(['dia','hora'], as_index=False)['sentimiento'].mean()
 sns.heatmap(temp.pivot('dia','hora','sentimiento'), vmin=-1, vmax=1)
-plt.title('Analisis de sentimientos por dia y hora')
+plt.title('Análisis de sentimientos por día y hora')
 plt.savefig('AnalisisSentimientosPostPorDiaYHora.png')  
 plt.show()
 
