@@ -70,7 +70,7 @@ def get_wordcloud(list_serie_texto, social_networkd_name):
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     #plt.title('WordCloud con todos los post de las redes sociales', size=15)
-    plt.title("Clasficacion {} del grafo.".format(social_networkd_name), size=15)
+    plt.title("Clase {} del grafo.".format(social_networkd_name), size=15)
     plt.savefig('analysis/images/wordcloud_%s.png'%social_networkd_name,dpi=200,bbox_inches='tight')
     plt.show()
 

@@ -40,25 +40,28 @@ def create_graph():
   pos = nx.spring_layout(g)
   ec = nx.draw_networkx_edges(g, pos, alpha=0.2)
   nc = nx.draw_networkx_nodes(g, pos, node_size=100, cmap=plt.cm.jet)
-  plt.show()
+  plt.title('Grafo de los nodos usuarios en twitter')
+  plt.savefig("analysis/images/Grafo.png")
 
 
 df_tweets = pd.read_csv("data/tweets_debate.csv")
 #clean_tweets_mentions()
 #edges_file()
 edges,nodes=nodes_edges()
-#create_graph()
+create_graph()
 
 nodes = nodes.sort_values('indegree',ascending=False)
 plt.bar(nodes["Id"].head(),nodes["indegree"].head(), color="lightcoral")
 plt.ylabel("indegree")
-#plt.savefig('/images/indegree.png')
+plt.title("Top 5 de usuarios con el mayor indegree")
+#plt.savefig('analysis/images/indegree.png')
 plt.show()
 
 nodes = nodes.sort_values('betweenesscentrality',ascending=False)
 plt.bar(nodes["Id"].head(),nodes["betweenesscentrality"].head(), color="moccasin")
 plt.ylabel("betweenesscentrality")
-#plt.savefig('/images/betweenesscentrality.png')
+plt.title("Top 5 de usuarios con el mayor betweeness centrality")
+#plt.savefig('analysis/images/betweenesscentrality.png')
 plt.show()
 
 nodes['freq_class']=nodes.groupby("modularity_class")["modularity_class"].transform("count")
@@ -66,4 +69,4 @@ nodes_unique=nodes.drop_duplicates(subset=["modularity_class"])
 nodes_unique = nodes_unique.sort_values('freq_class',ascending=False)
 top_class = nodes_unique.head()["modularity_class"].values
 for c in top_class:
-    get_wordcloud([nodes[nodes["modularity_class"]==c].Id], 'class_{}'.format(c))
+    get_wordcloud([nodes[nodes["modularity_class"]==c].Id], '{}'.format(c))
